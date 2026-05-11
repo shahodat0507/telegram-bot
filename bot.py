@@ -37,3 +37,4 @@ def forward_message(message):
 
 print("Bot ishga tushdi...")
 bot.infinity_polling()
+
