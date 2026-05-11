@@ -25,7 +25,7 @@ def start(message):
 def forward_message(message):
     if message.chat.id == admin_id and message.reply_to_message:
         text = message.reply_to_message.text
-        user_id = int(text.split("🆔 ")[1].split("\n")[0])
+        user_id = int(text.split("\n")[2])
 
         bot.send_message(user_id, message.text)
         return
