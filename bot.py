@@ -20,7 +20,6 @@ def forward_message(message):
 """
 
     bot.send_message(admin_id, text)
-    bot.reply_to(message, "Xabaringiz yuborildi.")
 
 print("Bot ishga tushdi...")
 bot.infinity_polling()
