@@ -12,8 +12,7 @@ def run_web():
     app.run(host="0.0.0.0", port=10000)
 
 threading.Thread(target=run_web).start()
-
-TOKEN = 8784214206:"AAH7yyhmHgnZtGfWzuGh_TX88X1IZLP7Gis"
+TOKEN = "8784214206:AAH7yyhmHgnZtGfWzuGh_TX88X1IZLP7Gis"
 bot = telebot.TeleBot(TOKEN)
 
 admin_id = 8425724360
