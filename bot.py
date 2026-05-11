@@ -16,7 +16,7 @@ import telebot
 
 TOKEN= "8784214206:AAFYgqbF9GNfQFWgyxE6Rzu21VAlRLtV7FQ"
 bot = telebot.TeleBot(TOKEN)
-
+admin_id = 8425724360
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.reply_to(message, "Assalomu alaykum! Murojaatingizni yuboring.")
@@ -29,7 +29,6 @@ def forward_message(message):
 
         bot.send_message(user_id, message.text)
         return
-    admin_id = 8425724360
     
     text = f"""
 📩 Yangi murojaat
