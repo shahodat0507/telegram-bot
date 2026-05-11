@@ -1,5 +1,6 @@
 from flask import Flask
 import threading
+import telebot
 
 app = Flask(__name__)
 
@@ -12,34 +13,41 @@ def run_web():
 
 threading.Thread(target=run_web).start()
 
-import telebot
-
-TOKEN= "8784214206:AAFYgqbF9GNfQFWgyxE6Rzu21VAlRLtV7FQ"
+TOKEN = "8784214206:AAFYgqbF9GNfQFWgyxE6Rzu21VA1RLtV7FQ"
 bot = telebot.TeleBot(TOKEN)
+
 admin_id = 8425724360
+
+reply_map = {}
+
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.reply_to(message, "Assalomu alaykum! Murojaatingizni yuboring.")
 
 @bot.message_handler(func=lambda message: True)
-def forward_message(message):
+def handle_message(message):
+
     if message.chat.id == admin_id and message.reply_to_message:
-        text = message.reply_to_message.text
-        user_id = int(text.split("\n")[3].replace("ID: ", ""))
+        reply_msg_id = message.reply_to_message.message_id
+        user_id = reply_map.get(reply_msg_id)
 
-        bot.send_message(user_id, message.text)
+        if user_id:
+            bot.send_message(user_id, message.text)
+            bot.send_message(admin_id, "✅ Javob yuborildi.")
+        else:
+            bot.send_message(admin_id, "❌ Bu xabarga javob yuborib bo‘lmadi. Yangi kelgan murojaatga Reply qiling.")
         return
-    
-    text = f"""
-📩 Yangi murojaat
 
-👤 {message.from_user.first_name}
-🆔 {message.from_user.id}
-✉️ {message.text}
+    text = f"""📩 Yangi murojaat
+
+👤 Ism: {message.from_user.first_name}
+ID: {message.from_user.id}
+
+✉️ Xabar: {message.text}
 """
 
-    bot.send_message(admin_id, text)
+    sent = bot.send_message(admin_id, text)
+    reply_map[sent.message_id] = message.from_user.id
 
 print("Bot ishga tushdi...")
 bot.infinity_polling()
-
