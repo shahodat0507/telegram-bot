@@ -22,7 +22,8 @@ def start(message):
     bot.reply_to(message, "Assalomu alaykum! Murojaatingizni yuboring.")
 
 @bot.message_handler(func=lambda message: True)
-def forward_message(message):if message.chat.id == admin_id and message.reply_to_message:
+def forward_message(message):
+    if message.chat.id == admin_id and message.reply_to_message:
         text = message.reply_to_message.text
         user_id = int(text.split("ID ")[1].split("\n")[0])
 
