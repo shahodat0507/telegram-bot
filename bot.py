@@ -36,12 +36,19 @@ def handle_message(message):
 
         return
 
-    # User xabarini adminga forward qilish
-    bot.forward_message(
-        admin_id,
-        message.chat.id,
-        message.message_id
-    )
+# User xabarini adminga forward qilish
+bot.forward_message(
+    admin_id,
+    message.chat.id,
+    message.message_id
+)
+
+info = f"""
+👤 Ism: {message.from_user.first_name}
+🆔 ID: {message.from_user.id}
+"""
+
+bot.send_message(admin_id, info)
 
 
 print("Bot ishga tushdi...")
