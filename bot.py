@@ -1,17 +1,4 @@
-from flask import Flask
-import threading
-import telebot
 
-app = Flask(__name__)
-
-@app.route('/')
-def home():
-    return "Bot ishlayapti!"
-
-def run_web():
-    app.run(host="0.0.0.0", port=10000)
-
-threading.Thread(target=run_web).start()
 TOKEN = "8784214206:AAH7yyhmHgnZtGfWzuGh_TX88X1IZLP7Gis"
 bot = telebot.TeleBot(TOKEN)
 
