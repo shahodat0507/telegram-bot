@@ -1,6 +1,6 @@
 import telebot
 
-TOKEN = "TOKENINGIZNI_BU_YERGA_YOZING"
+TOKEN = "TOKENINGIZ"
 bot = telebot.TeleBot(TOKEN)
 
 admin_id = 8425724360
@@ -8,17 +8,18 @@ admin_id = 8425724360
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    bot.reply_to(
-        message,
-        "Assalomu alaykum! Murojaatingizni yuboring."
-    )
+    bot.reply_to(message, "Assalomu alaykum")
 
 
 @bot.message_handler(func=lambda message: True)
 def handle_message(message):
 
-    # Admin javobi
-    if message.chat.id == admin_id and message.reply_to_message:
+    # Admin reply qilsa
+    if (
+        message.chat.id == admin_id
+        and message.reply_to_message
+        and message.reply_to_message.forward_from
+    ):
 
         try:
             user_id = message.reply_to_message.forward_from.id
@@ -28,11 +29,14 @@ def handle_message(message):
             bot.reply_to(message, "✅ Javob yuborildi")
 
         except:
-            bot.reply_to(message, "❌ Javob yuborilmadi")
+            bot.reply_to(
+                message,
+                "❌ Bu xabarga javob yuborib bo‘lmadi"
+            )
 
         return
 
-    # User xabarini adminga yuborish
+    # User xabarini adminga forward qilish
     bot.forward_message(
         admin_id,
         message.chat.id,
